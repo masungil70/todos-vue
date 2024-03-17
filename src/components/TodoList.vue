@@ -15,12 +15,7 @@
 import { ref } from "vue";
 import TodoItem from "./TodoItem.vue";
 
-const todoList = ref([
-  { id: 1, date: "2024-03-17", title: "오늘 할일 제목1" },
-  { id: 2, date: "2024-03-17", title: "오늘 할일 제목2" },
-  { id: 3, date: "2024-03-17", title: "오늘 할일 제목3" },
-  { id: 4, date: "2024-03-17", title: "오늘 할일 제목4" },
-]);
+const props = defineProps(["todoList"]);
 </script>
 
 <style lang="scss" scoped>
