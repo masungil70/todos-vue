@@ -32,7 +32,10 @@
 <script setup>
 import { ref } from "vue";
 //오늘에 할일 객체를 생성한다
-const todoItem = ref({ id: 1, date: "2024-03-17", title: "오늘 할일 제목1" });
+//const todoItem = ref({ id: 1, date: "2024-03-17", title: "오늘 할일 제목1" });
+//props로 전달받은 객체를 화면에 출력한다
+const props = defineProps(["todoItem"]);
+console.log("props.todoItem ", props.todoItem);
 </script>
 
 <style lang="scss" scoped>
