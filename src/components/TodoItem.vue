@@ -1,3 +1,4 @@
+<!-- 오늘 할일에 대한 것을 객체로 출력할 수 있게 수정-->
 <template>
   <div>
     <div class="input-group input-group-sm">
@@ -9,10 +10,10 @@
           class="form-input mt-0"
           type="date"
           disabled="disabled"
-          value="2024-03-17"
+          :value="todoItem.date"
         />
       </div>
-      <input type="text" class="form-control" value="오늘 할일 제목1" />
+      <input type="text" class="form-control" :value="todoItem.title" />
       <button
         class="btn btn-outline-primary dropdown-toggle"
         type="button"
@@ -29,6 +30,9 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+//오늘에 할일 객체를 생성한다
+const todoItem = ref({ id: 1, date: "2024-03-17", title: "오늘 할일 제목1" });
 </script>
 
 <style lang="scss" scoped>
