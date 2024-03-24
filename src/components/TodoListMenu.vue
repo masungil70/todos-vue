@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col">
         <span class="float-start" style="color: blue">▶</span>
-        <strong class="float-start">해야 할 작업들</strong>
+        <strong class="float-start">{{ selectTitle }}</strong>
       </div>
       <div class="col">
         <div class="btn-group float-end">
@@ -16,10 +16,11 @@
             리스트 필터
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item">해야 할 작업들</a></li>
-            <li><a class="dropdown-item">완료한 작업들</a></li>
-            <li><a class="dropdown-item">오늘의 모든 기록</a></li>
-            <li><a class="dropdown-item">모든 작업</a></li>
+            <li v-for="(title, idx) in filters" :key="idx">
+              <a class="dropdown-item" @click="onFilterChange(idx)">{{
+                title
+              }}</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -28,6 +29,21 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+
+const filters = [
+  "해야 할 작업들",
+  "완료한 작업들",
+  "오늘의 모든 기록",
+  "모든 작업",
+];
+
+const selectTitle = ref(filters[0]);
+
+const onFilterChange = (idx) => {
+  console.log("idx", idx);
+  selectTitle.value = filters[idx];
+};
 </script>
 
 <style lang="scss" scoped>
