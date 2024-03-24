@@ -1,6 +1,6 @@
 <template>
   <TodoListNew :today="today" @onAddTodoItem="onAddTodoItem" />
-  <TodoListMain :todoList="todoList" />
+  <TodoListMain :todoList="todoList" @onFilterChange="onFilterChange" />
 </template>
 
 <script setup>
@@ -39,6 +39,57 @@ const removeTodoItem = (id) => {
 //할일 이벤트 핸들러
 const onAddTodoItem = (todoItem) => {
   addTodoItem(todoItem.title, todoItem.date);
+};
+
+//소트관련 함수 선언
+const fnSort = (a, b) => {
+  const a_date = Date.parse(a.date);
+  const b_date = Date.parse(b.date);
+  if (a_date > b_date) return 1;
+  else if (a_date < b_date) return 0;
+  else return a.id - b.id;
+};
+
+//"해야 할 작업들"
+const getActiveTodayTodos = (todoList) => {
+  return todoList.value
+    .filter((todo) => todo.date == today && !todo.completed)
+    .slice()
+    .sort(fnSort);
+};
+
+//"완료한 작업들"
+const getCompletedTodayTodos = (todos) => {
+  return todos.value
+    .filter((todo) => todo.date == today && todo.completed)
+    .slice()
+    .sort(fnSort);
+};
+
+//"오늘의 모든 기록"
+const getAllTodayTodos = (todos) => {
+  return getActiveTodayTodos(todos)
+    .concat(getCompletedTodayTodos(todos))
+    .slice()
+    .sort(fnSort);
+};
+
+//"모든 작업"
+const getAllTodos = (todos) => {
+  return todos.value.slice().sort(fnSort);
+};
+
+//filter 변경 이벤트 핸들러
+const onFilterChange = (type) => {
+  switch (idx) {
+    case 0: //"해야 할 작업들"
+
+    case 1: //"완료한 작업들"
+
+    case 2: //"오늘의 모든 기록"
+
+    case 3: //"모든 작업"
+  }
 };
 
 //테스트 코드 : 나중에 삭제할 예정

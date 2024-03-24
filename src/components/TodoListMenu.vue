@@ -31,6 +31,9 @@
 <script setup>
 import { ref } from "vue";
 
+//메뉴선택(필터변경)에 대한 이벤트 선언
+const emits = defineEmits(["onFilterChange"]);
+
 const filters = [
   "해야 할 작업들",
   "완료한 작업들",
@@ -43,6 +46,7 @@ const selectTitle = ref(filters[0]);
 const onFilterChange = (idx) => {
   console.log("idx", idx);
   selectTitle.value = filters[idx];
+  emits("onFilterChange", idx);
 };
 </script>
 
