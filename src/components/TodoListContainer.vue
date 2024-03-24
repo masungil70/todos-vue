@@ -1,5 +1,5 @@
 <template>
-  <TodoListNew @onAddTodoItem="onAddTodoItem" />
+  <TodoListNew :today="today" @onAddTodoItem="onAddTodoItem" />
   <TodoListMain :todoList="todoList" />
 </template>
 
@@ -9,6 +9,8 @@ import TodoListNew from "./TodoListNew.vue";
 import TodoListMain from "./TodoListMain.vue";
 import { useStorage } from "../model/storage";
 
+//props에서 오늘의 날짜를 얻는다
+const { today } = defineProps(["today"]);
 //
 const { nextTodoId, loadTodoList, saveTodoList } = useStorage();
 

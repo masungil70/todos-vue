@@ -17,6 +17,7 @@ TodoList에 등록할 항목 UI
             <input
               type="date"
               class="float-start"
+              :min="today"
               v-model="date"
               ref="dateRef"
             />
@@ -44,6 +45,8 @@ const dateRef = ref();
 //제목과 일정 변수를 선언한다
 const title = ref("");
 const date = ref("");
+
+const { today } = defineProps(["today"]);
 
 //부모로 이벤트를 전송하기 위한 이벤트 선언
 const emits = defineEmits(["onAddTodoItem"]);
