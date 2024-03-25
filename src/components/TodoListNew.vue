@@ -67,6 +67,10 @@ const onClick = (e) => {
   console.log("todoItem", todoItem);
   //부모에게 이벤트를 발생한다
   emits("onAddTodoItem", todoItem);
+  title.value = "";
+  date.value = "";
+
+  titleRef.value.focus();
 };
 </script>
 

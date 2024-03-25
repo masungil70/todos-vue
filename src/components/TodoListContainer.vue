@@ -1,6 +1,10 @@
 <template>
   <TodoListNew :today="today" @onAddTodoItem="onAddTodoItem" />
-  <TodoListMain :todoList="filterTodoList" @onFilterChange="onFilterChange" />
+  <TodoListMain
+    :todoList="todoList"
+    :filterTodoList="filterTodoList"
+    @onFilterChange="onFilterChange"
+  />
 </template>
 
 <script setup>
@@ -14,7 +18,7 @@ const { today } = defineProps(["today"]);
 //
 const { nextTodoId, loadTodoList, saveTodoList } = useStorage();
 
-//전체 작업들에 대한 목록 배열 
+//전체 작업들에 대한 목록 배열
 const todoList = ref(loadTodoList());
 const filterTodoList = ref([]);
 
@@ -26,6 +30,14 @@ const addTodoItem = (title, date) => {
     date: date,
     completed: false,
   });
+  filterTodoList.value.push({
+    id: nextTodoId(),
+    title: title,
+    date: date,
+    completed: false,
+  });
+
+  console.log("filterTodoList->", filterTodoList);
   //로컬 저장소에 저장한다
   //saveTodoList(todoList);
 };
@@ -53,10 +65,13 @@ const dateSort = (a, b) => {
 
 //"해야 할 작업들"
 const getActiveTodayTodos = (todoList) => {
-  return todoList.value
-    .filter((todoItem) => todoItem.date == today && !todoItem.completed)
-    .slice()
-    .sort(dateSort);
+  const result = todoList.value.filter(
+    (todoItem) => todoItem.date == today && !todoItem.completed
+  );
+  console.log("getActiveTodayTodos->", result);
+  return [...result];
+  //.slice()
+  //.sort(dateSort);
 };
 
 //"완료한 작업들"
@@ -115,10 +130,9 @@ if (todoList.value.length == 0) {
   removeTodoItem(3);
 }
 
-//오늘 할일 목록을 설정한다 
-filterTodoList.value = getActiveTodayTodos(todoList);
+//오늘 할일 목록을 설정한다
+//filterTodoList.value = getActiveTodayTodos(todoList);
 console.log("초기시 ", filterTodoList.value);
-
 </script>
 
 <style  scoped>
