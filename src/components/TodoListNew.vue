@@ -57,10 +57,12 @@ const onClick = (e) => {
   if (title.value == "") {
     alert("제목은 필수 입력입니다");
     titleRef.value.focus();
+    return false;
   }
   if (date.value == "") {
     alert("일정을 필수 입력입니다");
     dateRef.value.focus();
+    return false;
   }
   //이벤트 전달이 전달할 정보(할일정보)
   const todoItem = { title: title.value, date: date.value };
