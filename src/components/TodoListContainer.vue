@@ -4,6 +4,7 @@
     :todoList="todoList"
     :filterTodoList="filterTodoList"
     @onFilterChange="onFilterChange"
+    @onTodoItemStatus="onTodoItemStatus"
   />
 </template>
 
@@ -54,6 +55,21 @@ const onAddTodoItem = (todoItem) => {
   addTodoItem(todoItem.title, todoItem.date);
 };
 
+//
+const onTodoItemStatus = (status) =>
+{
+  console.log("TodoListContainer.onTodoItemStatus", status);
+  switch (status.status) {
+    case 'delete':
+      //전달 받은 todo항목을 삭제한다
+      removeTodoItem(status.id);
+      break;
+    case 'complated':
+      //전달 받은 todo항목을 완료 상태로 설정한다
+      todoList.value.find(todoItem => todoItem.id == status.id).completed = true;
+      break;
+  }
+}
 //소트관련 함수 선언
 const dateSort = (a, b) => {
   const a_date = Date.parse(a.date);
@@ -63,7 +79,7 @@ const dateSort = (a, b) => {
   else return a.id - b.id;
 };
 
-//"해야 할 작업들"
+//"오늘 해야 할 작업들"
 const getActiveTodayTodos = (todoList) => {
   const result = todoList.value.filter(
     (todoItem) => todoItem.date == today && !todoItem.completed
@@ -72,7 +88,7 @@ const getActiveTodayTodos = (todoList) => {
   return [...result];
 };
 
-//"완료한 작업들"
+//"오늘 완료한 작업들"
 const getCompletedTodayTodos = (todoList) => {
   return todoList.value
     .filter((todoItem) => todoItem.date == today && todoItem.completed)
@@ -99,10 +115,10 @@ const onFilterChange = (type) => {
 
 const setFilterTodoList = () => {
   switch (filterType.value) {
-    case 0: //"해야 할 작업들"
+    case 0: //"오늘 해야 할 작업들"
       filterTodoList.value = getActiveTodayTodos(todoList);
       break;
-    case 1: //"완료한 작업들"
+    case 1: //"오늘 완료한 작업들"
       filterTodoList.value = getCompletedTodayTodos(todoList);
       break;
     case 2: //"오늘의 모든 기록"

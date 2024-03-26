@@ -1,13 +1,13 @@
 <template>
   <TodoListMenu @onFilterChange="onFilterChange" />
-  <TodoList :todoList="filterTodoList" />
+  <TodoList :todoList="filterTodoList" @onTodoItemStatus="onTodoItemStatus"/>
   <section>
     <div>
       <span class="float-start" style="color: red">▶</span>
       <strong class="float-start">처리하지 못한 작업들</strong>
     </div>
   </section>
-  <TodoList :todoList="pendingList()" />
+  <TodoList :todoList="pendingList()" @onTodoItemStatus="onTodoItemStatus" />
 </template>
 
 <script setup>
@@ -20,7 +20,7 @@ const { todoList, filterTodoList } = defineProps([
   "filterTodoList",
 ]);
 //메뉴선택(필터변경)에 대한 이벤트 선언
-const emits = defineEmits(["onFilterChange"]);
+const emits = defineEmits(["onFilterChange", "onTodoItemStatus"]);
 
 //처리하지 못한 작업들
 const pendingList = () => {
@@ -29,6 +29,13 @@ const pendingList = () => {
 
 //filter 변경 이벤트 핸들러
 const onFilterChange = (type) => emits("onFilterChange", type);
+
+const onTodoItemStatus = (status) => {
+  //부모로 이벤트를 처리할 수 있게 전달하다
+  console.log("TodoListMain.onTodoItemStatus", status);
+  emits('onTodoItemStatus', status);
+}
+
 </script>
 
 <style lang="scss" scoped>

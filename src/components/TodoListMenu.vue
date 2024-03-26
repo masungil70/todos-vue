@@ -35,8 +35,8 @@ import { ref } from "vue";
 const emits = defineEmits(["onFilterChange"]);
 
 const filters = [
-  "해야 할 작업들",
-  "완료한 작업들",
+  "오늘 해야 할 작업들",
+  "오늘 완료한 작업들",
   "오늘의 모든 기록",
   "모든 작업",
 ];
